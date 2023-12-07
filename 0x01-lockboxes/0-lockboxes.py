@@ -1,39 +1,33 @@
 #!/usr/bin/python3
-
-'''
-This Module contains one function.
-The function determines if n number of Locked boxes can be opened
-'''
-from collections import deque
+"""
+Module documentation for 0-lockboxes.py
+"""
 
 
 def canUnlockAll(boxes):
     """
-    Determines if all boxes can be opened by traversing through the
-    keys available in the boxes.
-
-    Args:
-    - boxes: A list of lists where each index represents a box and
-    its content are the keys to other boxes.
-
-    Returns:
-    - True if all boxes can be opened, else False.
+    determines if all the boxes can be opened
     """
-    if not boxes or len(boxes) == 1:
-        return True
 
-    visited = set()
-    queue = deque([0])
+    collected_keys = {0}
+    locked_boxes = set(range(1, len(boxes)))
+    boxes[0]
 
-    # Perform Breadth-First-Search traversal through the boxes.
-    while queue:
-        current_box = queue.popleft()
-        visited.add(current_box)
+    def search_box(box):
+        new_keys = (set(boxes[box])
+                    .intersection(locked_boxes)
+                    .difference(collected_keys))
+        for key in new_keys:
+            collected_keys.add(key)
+        for key in new_keys:
+            if key > len(boxes) - 1:
+                # invalid key
+                continue
+            locked_boxes.remove(key)
+            if (set(boxes[key])
+                    .intersection(locked_boxes)
+                    .difference(collected_keys)):
+                search_box(key)
 
-        # Check keys in the current box and add unvisited boxes to the queue.
-        keys = boxes[current_box]
-        for key in keys:
-            if key not in visited and key < len(boxes):
-                queue.append(key)
-
-    return len(visited) == len(boxes)
+    search_box(0)
+    return len(locked_boxes) == 0
