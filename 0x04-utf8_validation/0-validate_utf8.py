@@ -1,9 +1,17 @@
 #!/usr/bin/python3
-'''UTF-* validation module
-'''
+""" The `0-validate_utf8` module supplies a function `validUTF8` """
 
 
 def validUTF8(data):
+    """
+    validUTF8:  Function that performs UTF8 validation
+
+    Args:
+    data:       Lists
+
+    Return:
+    Boolean
+    """
     skip = 0
     n = len(data)
     for i in range(n):
